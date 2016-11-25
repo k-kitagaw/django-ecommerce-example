@@ -3,15 +3,23 @@
     <tr>
         <th>商品番号</th>
         <th>商品名</th>
-        <th>価格</th>
+        <th>単価</th>
+        <th>数量</th>
+        <th>金額</th>
     </tr>
 {% for product in products %}
     <tr>
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
+        <td>{{ product.count }}</td>
+        <td>{{ product.total_price }}</td>
     </tr>
 {% endfor %}
+    <tr>
+        <td colspan="4">合計</td>
+        <td>{{ total }}</td>
+    </tr>
 </table>
 
 <h1>お客様情報の入力</h1>

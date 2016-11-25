@@ -92,13 +92,13 @@ def cart_list(request):
     #   カートに入っている商品の情報を取得します
     products = Product.objects.filter(id__in=cart)
 
-    productsWithCount = list()
+    products_with_count = list()
     for product in products :
-        productWithCount = copy.copy(product)
-        productWithCount.count = len([x for x in cart if int(x, 10) == product.id])
-        productsWithCount.append(productWithCount)
+        product_with_count = copy.copy(product)
+        product_with_count.count = len([x for x in cart if int(x, 10) == product.id])
+        products_with_count.append(product_with_count)
 
-    return render(request, 'cart_list.html', {'products': productsWithCount })
+    return render(request, 'cart_list.html', {'products': products_with_count })
 
 def order(request):
     """
@@ -114,10 +114,19 @@ def order(request):
     #   カートに入っている商品の情報を取得します
     products = Product.objects.filter(id__in=cart)
 
+    products_with_count = list()
+    total = 0;
+    for product in products :
+        product_with_count = copy.copy(product)
+        product_with_count.count = len([x for x in cart if int(x, 10) == product.id])
+        product_with_count.total_price = product_with_count.count * product.price
+        products_with_count.append(product_with_count)
+        total += product_with_count.total_price
+
     #   決済方法を取得します。
     payments = get_list_or_404(Payment)
 
-    return render(request, 'order.html', {'products': products, 'payments': payments})
+    return render(request, 'order.html', {'products': products_with_count, 'payments': payments, 'total': total })
 
 def order_execute(request):
     """
