@@ -7,6 +7,7 @@
         <th>商品名</th>
         <th>価格</th>
         <th>数量</th>
+        <th>金額</th>
     </tr>
 {% for product in cart_products %}
     <tr>
@@ -14,9 +15,13 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td>{{ product.count }}</td>
+        <td>{{ product.total_price }}</td>
     </tr>
 {% endfor %}
-
+    <tr>
+        <td colspan="4">合計</td>
+        <td>{{ total }}</td>
+    </tr>
 </table>
 <hr>
 

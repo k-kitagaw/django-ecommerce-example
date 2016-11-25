@@ -24,12 +24,15 @@ def index(request):
     cart_products = Product.objects.filter(id__in=cart)
 
     products_with_count = list()
+    total = 0
     for product in cart_products :
         product_with_count = copy.copy(product)
         product_with_count.count = len([x for x in cart if int(x, 10) == product.id])
+        product_with_count.total_price = product_with_count.count * product.price
         products_with_count.append(product_with_count)
+        total += product_with_count.total_price
 
-    response = render(request, 'product_list.html', {'products': products, 'cart_products': products_with_count})
+    response = render(request, 'product_list.html', {'products': products, 'cart_products': products_with_count, 'total': total})
 
     return response
 
