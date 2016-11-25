@@ -35,13 +35,41 @@
                 <input class="mdl-textfield__input" type="text" id="search-field">
               </div>
             </div>
-            <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width is-upgraded" data-upgraded=",MaterialTextfield" onclick="location.href='../cart_reset/'">
-              <label class="mdl-button mdl-js-button mdl-button--icon" for="delete" data-upgraded=",MaterialButton">
+            <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width is-upgraded" data-upgraded=",MaterialTextfield">
+              <label class="mdl-button mdl-js-button mdl-button--icon" for="delete" data-upgraded=",MaterialButton" id="delete_items">
                 <i class="material-icons">delete</i>
               </label>
               <div class="mdl-textfield__expandable-holder">
                 <input class="mdl-textfield__input" type="text" id="search-field">
               </div>
+
+              <dialog class="mdl-dialog">
+                <h4 class="mdl-dialog__title">ショッピングカートを空にする</h4>
+                <div class="mdl-dialog__content">
+                  <p>
+                    ショッピングカートの中にある商品を全て削除します。
+                  </p>
+                </div>
+                <div class="mdl-dialog__actions">
+                  <button type="button" class="mdl-button mdl-js-button modal-btn mdl-button--colored" onclick="location.href='../cart_reset/'" id="delete_items_yes">はい</button>
+                  <button type="button" class="mdl-button mdl-js-button modal-btn close">いいえ</button>
+                </div>
+              </dialog>
+              <script>
+                var dialog = document.querySelector('dialog');
+                var showDialogButton = document.querySelector('#delete_items');
+                if (! dialog.showModal) {
+                  dialogPolyfill.registerDialog(dialog);
+                }
+                showDialogButton.addEventListener('click', function() {
+                  document.querySelector('#delete_items_yes').style.backgroundColor = 'none';
+                  dialog.showModal();
+                  console.log(document.querySelector('#delete_items_yes').style);
+                });
+                dialog.querySelector('.close').addEventListener('click', function() {
+                  dialog.close();
+                });
+              </script>
             </div>
             <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width is-upgraded" data-upgraded=",MaterialTextfield" onclick="location.href='../order/'">
               <label class="mdl-button mdl-js-button mdl-button--icon" for="credit_card" data-upgraded=",MaterialButton">
