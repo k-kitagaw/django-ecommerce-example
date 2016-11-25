@@ -1,4 +1,5 @@
 import datetime
+import copy
 from django.shortcuts import redirect, render, get_list_or_404, render_to_response
 from ecommerce.models import *
 
@@ -91,7 +92,13 @@ def cart_list(request):
     #   カートに入っている商品の情報を取得します
     products = Product.objects.filter(id__in=cart)
 
-    return render(request, 'cart_list.html', {'products': products})
+    productsWithCount = list()
+    for product in products :
+        productWithCount = copy.copy(product)
+        productWithCount.count = len([x for x in cart if int(x, 10) == product.id])
+        productsWithCount.append(productWithCount)
+
+    return render(request, 'cart_list.html', {'products': productsWithCount })
 
 def order(request):
     """
