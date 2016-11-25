@@ -1,33 +1,37 @@
-<a href="../cart_reset/">カートを空にする</a>
-<a href="../order/">注文する</a>
-<hr>
-<table>
-    <tr>
-        <th>商品番号</th>
-        <th>商品名</th>
-        <th>価格</th>
-        <th>数量</th>
-        <th>金額</th>
-    </tr>
-{% for product in cart_products %}
-    <tr>
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.count }}</td>
-        <td>{{ product.total_price }}</td>
-    </tr>
-{% endfor %}
-    <tr>
-        <td colspan="4">合計</td>
-        <td>{{ total }}</td>
-    </tr>
-</table>
-<hr>
+{% extends "common.html" %}
 
+{% block shopping_cart %}
+<div class="mdl-color--primary-dark">
+  <table>
+      <tr>
+          <th>商品番号</th>
+          <th>商品名</th>
+          <th>価格</th>
+          <th>数量</th>
+          <th>金額</th>
+      </tr>
+  {% for product in cart_products %}
+      <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.count }}</td>
+          <td>{{ product.total_price }}</td>
+      </tr>
+  {% endfor %}
+      <tr>
+          <td colspan="4">合計</td>
+          <td>{{ total }}</td>
+      </tr>
+  </table>
+</div>
+{% endblock %}
+
+{% block content %}
 {% for product in products %}
     <h1>{{ product.name }}</h1>
     <img src="../../media/{{ product.image }}" alt="" width="200" height="200" border="0" />
     価格：{{ product.price }}
     <a href="../cart_add/{{ product.id }}">カートに入れる</a>
 {% endfor %}
+{% endblock %}

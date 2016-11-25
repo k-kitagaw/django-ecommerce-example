@@ -1,5 +1,5 @@
-<a href="../list/">商品一覧に戻る</a>
-<a href="../cart_reset/">カートを空にする</a>
+{% extends "common.html" %}
+{% block content %}
 <table>
     <tr>
         <th>商品番号</th>
@@ -20,3 +20,4 @@
 {% if not products %}
     商品が1件もカートに存在しません
 {% endif %}
+{% endblock %}
