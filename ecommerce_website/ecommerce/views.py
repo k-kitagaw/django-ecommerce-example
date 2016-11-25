@@ -15,10 +15,6 @@ def index(request):
 
     products = get_list_or_404(Product)
 
-    #   セッションにカートの情報を格納するListを定義します。
-    if not request.session.has_key('cart'):
-        request.session['cart'] = list()
-
     #   カート(セッション)内にある商品IDを取得します。
     if not request.session.has_key('cart'):
         request.session['cart'] = list()
