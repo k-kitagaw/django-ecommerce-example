@@ -1,3 +1,5 @@
+{% extends "common.html" %}
+{% block content %}
 <a href="../cart_reset/">カートを空にする</a>
 <a href="../order/">注文する</a>
 <hr>
@@ -31,3 +33,4 @@
     価格：{{ product.price }}
     <a href="../cart_add/{{ product.id }}">カートに入れる</a>
 {% endfor %}
+{% endblock %}
