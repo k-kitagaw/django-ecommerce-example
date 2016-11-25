@@ -9,6 +9,8 @@ def index(request):
     """
     商品一覧画面(/ec/list/)が呼び出された際に呼び出されるビューです。
     商品情報を返します。
+    カートの中身を表示するページが表示される場合に実行されるビューです。
+    カートに入っている商品情報を返します。
     """
 
     products = get_list_or_404(Product)
@@ -17,7 +19,21 @@ def index(request):
     if not request.session.has_key('cart'):
         request.session['cart'] = list()
 
-    response = render(request, 'product_list.html', {'products': products})
+    #   カート(セッション)内にある商品IDを取得します。
+    if not request.session.has_key('cart'):
+        request.session['cart'] = list()
+    cart = request.session['cart']
+
+    #   カートに入っている商品の情報を取得します
+    cart_products = Product.objects.filter(id__in=cart)
+
+    products_with_count = list()
+    for product in cart_products :
+        product_with_count = copy.copy(product)
+        product_with_count.count = len([x for x in cart if int(x, 10) == product.id])
+        products_with_count.append(product_with_count)
+
+    response = render(request, 'product_list.html', {'products': products, 'cart_products': products_with_count})
 
     return response
 
