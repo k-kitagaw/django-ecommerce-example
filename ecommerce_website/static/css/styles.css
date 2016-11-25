@@ -73,7 +73,8 @@ a img{
 }
 
   .android-header .material-icons {
-    color: #767777 !important;
+    /*color: #767777 !important;*/
+    color: white !important;
   }
 
   .android-header .mdl-layout__drawer-button {
