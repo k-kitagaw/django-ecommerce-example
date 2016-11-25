@@ -62,9 +62,7 @@
                   dialogPolyfill.registerDialog(dialog);
                 }
                 showDialogButton.addEventListener('click', function() {
-                  document.querySelector('#delete_items_yes').style.backgroundColor = 'none';
                   dialog.showModal();
-                  console.log(document.querySelector('#delete_items_yes').style);
                 });
                 dialog.querySelector('.close').addEventListener('click', function() {
                   dialog.close();
