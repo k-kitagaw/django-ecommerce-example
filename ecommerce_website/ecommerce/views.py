@@ -106,6 +106,7 @@ def cart_list(request):
 
     #   カートに入っている商品の情報を取得します
     products = Product.objects.filter(id__in=cart)
+    cart_products = Product.objects.filter(id__in=cart)
 
     products_with_count = list()
     total = 0
@@ -116,7 +117,7 @@ def cart_list(request):
         products_with_count.append(product_with_count)
         total += product_with_count.total_price
 
-    return render(request, 'cart_list.html', {'products': products_with_count, 'total': total })
+    return render(request, 'cart_list.html', {'products': products_with_count, 'cart_products': products_with_count, 'total': total })
 
 def order(request):
     """
@@ -131,6 +132,7 @@ def order(request):
 
     #   カートに入っている商品の情報を取得します
     products = Product.objects.filter(id__in=cart)
+    cart_products = Product.objects.filter(id__in=cart)
 
     products_with_count = list()
     total = 0;
@@ -144,7 +146,7 @@ def order(request):
     #   決済方法を取得します。
     payments = get_list_or_404(Payment)
 
-    return render(request, 'order.html', {'products': products_with_count, 'payments': payments, 'total': total })
+    return render(request, 'order.html', {'products': products_with_count, 'cart_products': products_with_count, 'payments': payments, 'total': total })
 
 def order_execute(request):
     """
@@ -200,3 +202,5 @@ def order_complete(request):
     if request.session.has_key('cart'):
         del request.session['cart']
     return response
+
+    cart_products = Product.objects.filter(id__in=cart)
