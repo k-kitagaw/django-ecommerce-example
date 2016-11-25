@@ -1,23 +1,40 @@
 {% extends "common.html" %}
+{% load humanize %}
+
+{% block content_title %}
+ショッピングカート
+{% endblock %}
+
 {% block content %}
-<table>
+{% if not products %}
+    商品が1件もカートに存在しません
+{% else %}
+<table class="mdl-data-table cart-table mdl-shadow--3dp">
     <tr>
+        <th></th>
         <th>商品番号</th>
         <th>商品名</th>
         <th>価格</th>
         <th>数量</th>
+        <th>金額</th>
     </tr>
 {% for product in products %}
     <tr>
+        <td><img src="../../media/{{ product.image }}" alt="" width="50" height="50" border="0" /></td>
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
+        <td>{{ product.price|intcomma }}</td>
         <td>{{ product.count }}</td>
+        <td>{{ product.total_price|intcomma }}</td>
     </tr>
 {% endfor %}
-
+    <tr>
+        <td colspan="5">合計</td>
+        <td>{{ total|intcomma }}</td>
+    </tr>
 </table>
-{% if not products %}
-    商品が1件もカートに存在しません
+<div class="mdl-cell mdl-cell--12-col order-button-right">
+<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="location.href='../order/'">注文フォームへ</button>
+</div>
 {% endif %}
 {% endblock %}

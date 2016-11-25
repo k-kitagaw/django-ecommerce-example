@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
     'ecommerce'
 ]
@@ -126,3 +127,5 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
        os.path.join(BASE_DIR,'static'),
        )
+
+NUMBER_GROUPING=3

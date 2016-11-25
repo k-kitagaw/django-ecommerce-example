@@ -551,3 +551,46 @@ a img{
 .mdl-color--primary-dark {
     background-color: #f7f7f7 !important;
 }
+
+.demo-card-square.mdl-card {
+  width: 320px;
+  height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+}
+.btn_add_shopping_cart {
+  float: right;
+}
+.sticky-cart-table, .cart-table {
+  background-color: #f7f7f7 !important;
+  border: none;
+  margin-left: 12px;
+}
+.cart-table {
+  width: 100%;
+}
+.mdl-data-table tbody tr:hover {
+  background-color: #f7f7f7 !important;
+}
+.order-sub-title {
+  margin-left: 12px;
+}
+.payment_name_span {
+  margin-right: 10px;
+}
+.order-button {
+  text-align: center;
+}
+.order-button-right {
+  text-align: right;
+}
+.mdl-dialog {
+  width: 500px;
+}
+.modal-btn {
+  position: static !important;
+}
+#delete_items_yes:not(:hover) {
+  background-color: transparent;
+}

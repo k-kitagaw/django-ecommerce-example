@@ -1,8 +1,8 @@
 {% extends "common.html" %}
-
+{% load humanize %}
 {% block shopping_cart %}
-<div class="mdl-color--primary-dark">
-  <table>
+<!-- <div class="mdl-color--primary-dark mdl-shadow--3dp">
+  <table class="mdl-data-table sticky-cart-table">
       <tr>
           <th>商品番号</th>
           <th>商品名</th>
@@ -14,24 +14,44 @@
       <tr>
           <td>{{ product.id }}</td>
           <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.price|intcomma }}</td>
           <td>{{ product.count }}</td>
-          <td>{{ product.total_price }}</td>
+          <td>{{ product.total_price|intcomma }}</td>
       </tr>
   {% endfor %}
       <tr>
           <td colspan="4">合計</td>
-          <td>{{ total }}</td>
+          <td>{{ total|intcomma }}</td>
       </tr>
   </table>
-</div>
+</div> -->
+{% endblock %}
+
+{% block content_title %}
+商品一覧
 {% endblock %}
 
 {% block content %}
+<div class="android-card-container mdl-grid">
 {% for product in products %}
-    <h1>{{ product.name }}</h1>
+    <!-- <h1>{{ product.name }}</h1>
     <img src="../../media/{{ product.image }}" alt="" width="200" height="200" border="0" />
     価格：{{ product.price }}
-    <a href="../cart_add/{{ product.id }}">カートに入れる</a>
+    <a href="../cart_add/{{ product.id }}">カートに入れる</a> -->
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone demo-card-square mdl-card mdl-shadow--3dp">
+      <div class="mdl-card__title mdl-card--expand" style="background:url('../../media/{{ product.image }}') no-repeat #46B6AC; background-size:320px;">
+      </div>
+      <div class="mdl-card__supporting-text">
+        <h2 class="mdl-card__title-text">{{ product.name }}</h2>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect btn_add_shopping_cart" href="../cart_add/{{ product.id }}">
+          ￥{{ product.price|intcomma }}
+          <i class="material-icons">add_shopping_cart</i>
+        </a>
+      </div>
+    </div>
 {% endfor %}
+</div>
 {% endblock %}
