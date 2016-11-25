@@ -545,3 +545,9 @@ a img{
 .mdl-layout__header {
   background-color: #1A237E;
 }
+.android-more-section {
+  min-height: 600px;
+}
+.mdl-color--primary-dark {
+    background-color: #f7f7f7 !important;
+}
