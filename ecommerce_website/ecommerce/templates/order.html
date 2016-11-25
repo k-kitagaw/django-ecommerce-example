@@ -1,8 +1,18 @@
 {% extends "common.html" %}
+{% load humanize %}
+
+{% block content_title %}
+注文フォーム
+{% endblock %}
+
 {% block content %}
-<h1>カート内の商品</h1>
-<table>
+{% if not products %}
+商品が1件もカートに存在しません
+{% else %}
+<h4 class="order-sub-title">カート内の商品</h4>
+<table class="mdl-data-table cart-table mdl-shadow--3dp">
     <tr>
+        <th></th>
         <th>商品番号</th>
         <th>商品名</th>
         <th>単価</th>
@@ -11,67 +21,100 @@
     </tr>
 {% for product in products %}
     <tr>
+        <td><img src="../../media/{{ product.image }}" alt="" width="50" height="50" border="0" /></td>
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
+        <td>{{ product.price|intcomma }}</td>
         <td>{{ product.count }}</td>
-        <td>{{ product.total_price }}</td>
+        <td>{{ product.total_price|intcomma }}</td>
     </tr>
 {% endfor %}
     <tr>
-        <td colspan="4">合計</td>
-        <td>{{ total }}</td>
+        <td colspan="5">合計</td>
+        <td>{{ total|intcomma }}</td>
     </tr>
 </table>
 
-<h1>お客様情報の入力</h1>
+<h4 class="order-sub-title">お客様情報の入力</h1>
 <form action="../order_execute/" method="post">
 {% csrf_token %}
-<table>
-    <tr>
-        <th>お名前 (姓)</th>
-        <td><input name="last_name" type="text" id="last_name" size="50"></td>
-        <th>(名)</th>
-        <td><input name="first_name" type="text" id="first_name" size="50"></td>
-    </tr>
-    <tr>
-        <th>郵便番号</th>
-        <td><input name="postal_code" type="text" id="postal_code" size="50"></td>
-    </tr>
-    <tr>
-        <th>都道府県</th>
-        <td><input name="prefecture" type="text" id="prefecture" size="50"></td>
-    </tr>
-    <tr>
-        <th>市区町村</th>
-        <td><input name="city" type="text" id="city" size="50"></td>
-    </tr>
-    <tr>
-        <th>番地など</th>
-        <td><input name="street1" type="text" id="street1" size="50"></td>
-    </tr>
-    <tr>
-        <th>建物名など</th>
-        <td><input name="street2" type="text" id="street2" size="50"></td>
-    </tr>
-    <tr>
-        <th>電話番号</th>
-        <td><input name="tel" type="text" id="tel" size="50"></td>
-    </tr>
-    <tr>
-        <th>メールアドレス</th>
-        <td><input name="email" type="text" id="email" size="50"></td>
-    </tr>
-    <tr>
-        <th>決済方法</th>
-        <td>
-        {% for payment in payments %}
-            <input type="radio" name="payment" id="payment_name" value="{{ payment.id }}" />
-            <label for="payment_name">{{ payment.name }}</label><br />
-        {% endfor %}
-        </td>
-    </tr>
-</table>
-<input type="submit" value="注文" />
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+<ul class="mdl-list mdl-cell mdl-cell--12-col">
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="last_name" name="last_name">
+      <label class="mdl-textfield__label" for="last_name">お名前 (姓)</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="first_name" name="first_name">
+      <label class="mdl-textfield__label" for="first_name">(名)</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="postal_code" name="postal_code" pattern="-?[0-9]{3}-[0-9]{4}?">
+      <label class="mdl-textfield__label" for="postal_code">郵便番号</label>
+      <span class="mdl-textfield__error">郵便番号は ○○○-○○○○ の形式でご入力ください</span>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="prefecture" name="prefecture">
+      <label class="mdl-textfield__label" for="prefecture">都道府県</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="city" name="city">
+      <label class="mdl-textfield__label" for="city">市区町村</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="street1" name="street1">
+      <label class="mdl-textfield__label" for="street1">番地など</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="street2" name="street2">
+      <label class="mdl-textfield__label" for="street2">建物名など</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="tel" name="tel" pattern="-?[0-9]{2,4}-[0-9]{2,4}-[0-9]{3,4}?">
+      <label class="mdl-textfield__label" for="tel">電話番号</label>
+      <span class="mdl-textfield__error">電話番号は ○○○-○○○○-○○○○ の形式でご入力ください</span>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="email" name="email">
+      <label class="mdl-textfield__label" for="email">メールアドレス</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="email" name="email">
+      <label class="mdl-textfield__label" for="email">メールアドレス</label>
+    </div>
+  </li>
+  <li class="mdl-list__item">
+    <span class="payment_name_span">決済方法</span>
+    {% for payment in payments %}
+      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ payment.id }}">
+        <input type="radio" id="option-{{ payment.id }}" class="mdl-radio__button" name="payment" value="{{ payment.id }}" {% if payment.id == 1 %}required{% endif %}>
+        <span class="mdl-radio__label payment_name_span">{{ payment.name }}</span>
+      </label>
+    {% endfor %}
+  </li>
+</label>
+</ul>
+<div class="mdl-cell mdl-cell--12-col order-button">
+<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">注文</button>
+</div>
+</div>
 </form>
+{% endif %}
 {% endblock %}
