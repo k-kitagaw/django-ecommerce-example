@@ -177,7 +177,9 @@ def order_execute(request):
     products = Product.objects.filter(id__in=cart)
 
     for product in products:
-        order_product = Order_Product(order=order, product=product, count=1, price=product.price)
+        count = len([x for x in cart if int(x, 10) == product.id])
+
+        order_product = Order_Product(order=order, product=product, count=count, price=product.price)
         order_product.save()
 
     #   注文完了画面にリダイレクトします。
