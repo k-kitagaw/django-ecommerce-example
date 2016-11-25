@@ -1,6 +1,24 @@
-<a href="../cart_list/">カートの中身を表示する</a>
 <a href="../cart_reset/">カートを空にする</a>
 <a href="../order/">注文する</a>
+<hr>
+<table>
+    <tr>
+        <th>商品番号</th>
+        <th>商品名</th>
+        <th>価格</th>
+    </tr>
+{% for product in cart_products %}
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.count }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+<hr>
+
 {% for product in products %}
     <h1>{{ product.name }}</h1>
     <img src="../../media/{{ product.image }}" alt="" width="200" height="200" border="0" />
